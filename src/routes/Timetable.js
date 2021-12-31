@@ -7,6 +7,7 @@ function Timetable() {
     const [semester, setSemester] = useState("1");
     const [inputCheck, setInputCheck] = useState(false);
     const [selectedCourses, setSelectedCourses] = useState([]);
+    const [numCourse, setNumCourse] = useState("1");
 
     const handleSemesterChange = (e) => {
         if (e.target.value === "1") {
@@ -32,6 +33,11 @@ function Timetable() {
 
     const handleDelete = (e) => {
         setSelectedCourses(prevS => prevS.filter(course => course.code+course.section != e.target.parentElement.id))
+    }
+
+    const handleMake = () => {
+        console.log(selectedCourses);
+        console.log(numCourse);
     }
 
     return(
@@ -62,8 +68,9 @@ function Timetable() {
             </ul> : null}
             {selectedCourses.length > 0 ? 
             <div>
-                <label for="course-num">Number of courses to take: </label>
-                <input name="course-num" type="number" min="1" max={selectedCourses.length > 5 ? 5 : selectedCourses.length }/>
+                <label htmlFor="course-num">Number of courses to take: </label>
+                <input name="course-num" value={numCourse} type="number" min="1" max={selectedCourses.length > 5 ? 5 : selectedCourses.length} onChange={(e)=>setNumCourse(e.target.value)}/>
+                <button onClick={handleMake}>Make timetable</button>
             </div>
             : null}
         </div>
