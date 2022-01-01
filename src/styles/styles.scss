@@ -1,0 +1,83 @@
+$timetable-elem-height: 60px;
+$border: 1px solid #000;
+$color1: #ae7b7b;
+$color2: #8ba782;
+$color3: #6d6f76;
+$color4: #6a7dc1;
+$color5: #695353;
+$font-color: #fff;
+
+html, body {
+    box-sizing: border-box;
+}
+
+.comb:hover {
+    background-color: #666666;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.timetable {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    li {
+        height: $timetable-elem-height;
+        line-height: $timetable-elem-height;
+    }
+    .timeline {
+        li:first-child {
+            height: calc($timetable-elem-height/2);
+            line-height: calc($timetable-elem-height/2);
+        }
+        li {
+            border-right: $border;
+            border-collapse: collapse;
+        }
+    }
+    .courses {
+        .courses-wrapper {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            height: 100%;
+            .courses-group {
+                height: 100%;
+                .top-info {
+                    border-bottom: $border;
+                }
+                ul {
+                    height: 100%;
+                    position: relative;
+                    li[class^='course-'] {
+                        width: 100%;
+                        position: absolute;
+                        color: $font-color;
+                        .coursetext {
+                            height: 100%;
+                            display: inline-block;
+                        }
+                    }
+                }
+                .course-1 {
+                    background-color: $color1;
+                }
+                .course-2 {
+                    background-color: $color2;
+                }
+                .course-3 {
+                    background-color: $color3;
+                }
+                .course-4 {
+                    background-color: $color4;
+                }
+                .course-5 {
+                    background-color: $color5;
+                }
+            }
+        }
+    }
+}

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import Select from 'react-select'
 
+import "../styles/styles.scss";
+
 import courses from "../data/simplified";
+import BaseTable from "../components/BaseTable";
 
 // check if two courses have overlapping time
 function compareTime(c1, c2) { 
@@ -73,23 +76,28 @@ function k_combinations(set, k) {
 function Timetable() {
     const [semester, setSemester] = useState("1");
     const [inputCheck, setInputCheck] = useState(false);
+    
     const [selectedCourses, setSelectedCourses] = useState([]);
     const [selectedSubclasses, setSelectedSubclasses] = useState([]);
     const [numCourse, setNumCourse] = useState("1");
-    const [make, setMake] = useState(false);
+    
     const [result, setResult] = useState([]);
+    const [selectedComb, setSelectedComb] = useState([]);
+
+    const [showComb, setShowComb] = useState(false);
+    const [showTable, setShowTable] = useState(false);
 
     const handleSemesterChange = (e) => {
         if (e.target.value === "1") {
             setSemester("1");
             setSelectedCourses([]);
             setSelectedSubclasses([]);
-            setMake(false);
+            setShowComb(false);
         } else if (e.target.value === "2") {
             setSemester("2");
             setSelectedCourses([]);
             setSelectedSubclasses([]);
-            setMake(false);
+            setShowComb(false);
         }
     }
 
@@ -104,16 +112,16 @@ function Timetable() {
     const handleAdd = (e) => {
         if(!selectedCourses.includes(e)){
             var addedCourses = []
-            for(var i = 0; i<e["subclass"].length; i++){
+            for(var i = 0; i < e.subclass.length; i++){
                 var newCourse = {
-                    "code": e["code"],
-                    "title": e["title"],
-                    "term": e["term"],
-                    "section": e["subclass"][i]["section"],
-                    "stime": e["subclass"][i]["stime"],
-                    "etime": e["subclass"][i]["etime"],
-                    "venue": e["subclass"][i]["venue"],
-                    "day": e["subclass"][i]["day"]
+                    "code": e.code,
+                    "title": e.title,
+                    "term": e.term,
+                    "section": e.subclass[i].section,
+                    "stime": e.subclass[i].stime,
+                    "etime": e.subclass[i].etime,
+                    "venue": e.subclass[i].venue,
+                    "day": e.subclass[i].day
                 }
                 addedCourses.push(newCourse);
             }
@@ -123,20 +131,37 @@ function Timetable() {
     }
 
     const handleDelete = (e) => {
+        if (numCourse == selectedCourses.length) {
+            setNumCourse(numCourse-1)
+        };
         setSelectedCourses(prevS => prevS.filter(course => course.code != e.target.parentElement.id));
         setSelectedSubclasses(prevS => prevS.filter(course => course.code != e.target.parentElement.id));
     }
 
     const handleMake = () => {
+        setShowTable(false);
+        setSelectedComb([])
         var comb = k_combinations(selectedSubclasses, numCourse);
         comb = comb.filter(c => isValidCombination(c));
         setResult(comb);
-        setMake(true);
+        setShowComb(true);
+    }
+
+    const displayTable = (idx) => {
+        setSelectedComb(result[idx]);
+        setShowTable(true);
+        setShowComb(false);
+    }
+
+    const hideTable = () => {
+        setSelectedComb([]);
+        setShowTable(false);
+        setShowComb(true);
     }
 
     return(
         <div>
-            <h1>Timetable</h1>
+            <h1>HKU Timetable Combination Finder (21-22)</h1>
             <div>
                 Semester 1 <input type="radio" value="1" name="semester" checked={semester === "1" ? true : false} onChange={handleSemesterChange}/>
                 Semester 2 <input type="radio" value="2" name="semester" checked={semester === "2" ? true : false} onChange={handleSemesterChange}/>
@@ -164,17 +189,29 @@ function Timetable() {
             <div>
                 <label htmlFor="course-num">Number of courses to take: </label>
                 <input name="course-num" value={numCourse} type="number" min="1" max={selectedCourses.length > 5 ? 5 : selectedCourses.length} onChange={(e)=>setNumCourse(e.target.value)}/>
-                <button onClick={handleMake}>Make timetable</button>
+                <button onClick={handleMake}>See combinations</button>
             </div>
             : null}
-            {make ? 
+            {showComb ? 
             <div>
+                <h3>Total {result.length} {result.length > 1 ? 'combinations' : 'combination'} available!</h3>
                 {result.map((comb,idx) =>
-                    <ul key={idx}>
-                        {comb.map((course,id) => <li key={id}>{course.code + " " + course.title + " " + course.section + " " + course.day + " " + course.stime + " " + course.etime}</li>)}
-                    </ul>   
+                    <div className={`comb ${idx}`} key={idx}>
+                        <ul>
+                            {comb.map((course,id) => <li key={id}>{course.code + " " + course.title + " " + course.section + " " + course.day + " " + course.stime + " " + course.etime}</li>)}
+                        </ul>
+                        <button onClick={(e)=>displayTable(idx, e)}>See Timetable</button>   
+                    </div>
                 )}
             </div>
+            : null}
+            {showTable ?
+            <div>
+                <button onClick={hideTable}>Choose another combination</button>
+                <BaseTable 
+                    courses={selectedComb}
+                />
+            </div>   
             : null}
         </div>
     );
