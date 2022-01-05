@@ -9,6 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Timetable />} />
         <Route path="/timetable" element={<Timetable />} />
       </Routes>
     </Router>

@@ -1,10 +1,30 @@
 import { useEffect, useState } from "react";
-import Select from 'react-select'
+import Select from 'react-select';
+
+import Grid from '@mui/material/Grid';
+
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 import "../styles/styles.scss";
 
 import courses from "../data/simplified";
 import BaseTable from "../components/BaseTable";
+import { ClassSharp } from "@material-ui/icons";
 
 // check if two courses have overlapping time
 function compareTime(c1, c2) { 
@@ -130,12 +150,12 @@ function Timetable() {
         }
     }
 
-    const handleDelete = (e) => {
+    const handleDelete = id => () => {
         if (numCourse == selectedCourses.length) {
             setNumCourse(numCourse-1)
         };
-        setSelectedCourses(prevS => prevS.filter(course => course.code != e.target.parentElement.id));
-        setSelectedSubclasses(prevS => prevS.filter(course => course.code != e.target.parentElement.id));
+        setSelectedCourses(prevS => prevS.filter(course => course.code != id));
+        setSelectedSubclasses(prevS => prevS.filter(course => course.code != id));
     }
 
     const handleMake = () => {
@@ -162,10 +182,13 @@ function Timetable() {
     return(
         <div>
             <h1>HKU Timetable Combination Finder (21-22)</h1>
-            <div>
-                Semester 1 <input type="radio" value="1" name="semester" checked={semester === "1" ? true : false} onChange={handleSemesterChange}/>
-                Semester 2 <input type="radio" value="2" name="semester" checked={semester === "2" ? true : false} onChange={handleSemesterChange}/>
-            </div>
+            <FormControl component="fieldset">
+                <FormLabel component="legend">Choose Semester</FormLabel>
+                <RadioGroup row aria-label="semester" name="row-radio-buttons-group">
+                    <FormControlLabel value="1" control={<Radio />} label="Semester 1" checked={semester === "1" ? true : false} onChange={handleSemesterChange} />
+                    <FormControlLabel value="2" control={<Radio />} label="Semester 2" checked={semester === "2" ? true : false} onChange={handleSemesterChange} />
+                </RadioGroup>
+            </FormControl>
             <Select 
                 name="selectCourse"
                 value=""
@@ -177,20 +200,43 @@ function Timetable() {
                 onChange={handleAdd}
             />
             {selectedCourses.length > 0 ? 
-            <ul>
+            <List>
                 {selectedCourses.map((course,idx) => 
-                    <li id={course.code} key={idx}>
-                        <span>{course.code + " " + course.title}</span>
-                        <button onClick={handleDelete}>delete</button>
-                    </li>
+                    <ListItem id={course.code} key={idx}
+                        secondaryAction={
+                            <IconButton edge="end" aria-label="delete" onClick={handleDelete(`${course.code}`)}>
+                                <DeleteIcon/>
+                            </IconButton>
+                        }
+                    >
+                        <ListItemText 
+                            primary={course.code}
+                            secondary={course.title}
+                        />
+                    </ListItem>
                 )}
-            </ul> : null}
+            </List> : null}
             {selectedCourses.length > 0 ? 
-            <div>
-                <label htmlFor="course-num">Number of courses to take: </label>
-                <input name="course-num" value={numCourse} type="number" min="1" max={selectedCourses.length > 5 ? 5 : selectedCourses.length} onChange={(e)=>setNumCourse(e.target.value)}/>
-                <button onClick={handleMake}>See combinations</button>
-            </div>
+            <Grid container style={{width:'80%',margin:'auto'}} justifyContent="center" alignItems="stretch" spacing={2}>
+                <Grid item xs={8}>
+                <TextField
+                    label="Number of courses to take:"
+                    type="number"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    variant="outlined"
+                    value={numCourse}
+                    min="1"
+                    max={selectedCourses.length > 5 ? 5 : selectedCourses.length}
+                    onChange={(e)=>setNumCourse(e.target.value)}
+                    fullWidth 
+                />
+                </Grid>
+                <Grid alignItems="stretch" style={{ display: "flex" }} item xs={4}>
+                    <Button variant="contained" onClick={handleMake} startIcon={<FormatListBulletedIcon />}>See Combinations</Button>
+                </Grid>
+            </Grid>
             : null}
             {showComb ? 
             <div>
