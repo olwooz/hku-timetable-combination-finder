@@ -1,30 +1,17 @@
 import { useEffect, useState } from "react";
-import Select from 'react-select';
 
-import Grid from '@mui/material/Grid';
-
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { Typography } from "@mui/material";
 
 import "../styles/styles.scss";
 
 import courses from "../data/simplified";
 import BaseTable from "../components/BaseTable";
 import { ClassSharp } from "@material-ui/icons";
+import SemesterController from "../components/SemesterController";
+import CourseSearchBar from "../components/CourseSearchBar";
+import SelectedCoursesList from "../components/SelectedCoursesList";
+import SeeCombinationsButton from "../components/SeeCombinationsButton";
+import CombinationList from "../components/CombinationList";
 
 // check if two courses have overlapping time
 function compareTime(c1, c2) { 
@@ -107,17 +94,19 @@ function Timetable() {
     const [showComb, setShowComb] = useState(false);
     const [showTable, setShowTable] = useState(false);
 
-    const handleSemesterChange = (e) => {
-        if (e.target.value === "1") {
+    const reset = () => {
+        setSelectedCourses([]);
+        setSelectedSubclasses([]);
+        setShowComb(false);
+    }
+
+    const handleSemesterChange = (semester) => {
+        if (semester === "1") {
             setSemester("1");
-            setSelectedCourses([]);
-            setSelectedSubclasses([]);
-            setShowComb(false);
-        } else if (e.target.value === "2") {
+            reset();
+        } else if (semester === "2") {
             setSemester("2");
-            setSelectedCourses([]);
-            setSelectedSubclasses([]);
-            setShowComb(false);
+            reset();
         }
     }
 
@@ -158,7 +147,7 @@ function Timetable() {
         setSelectedSubclasses(prevS => prevS.filter(course => course.code != id));
     }
 
-    const handleMake = () => {
+    const handleMakeComb = () => {
         setShowTable(false);
         setSelectedComb([])
         var comb = k_combinations(selectedSubclasses, numCourse);
@@ -181,75 +170,17 @@ function Timetable() {
 
     return(
         <div>
-            <h1>HKU Timetable Combination Finder (21-22)</h1>
-            <FormControl component="fieldset">
-                <FormLabel component="legend">Choose Semester</FormLabel>
-                <RadioGroup row aria-label="semester" name="row-radio-buttons-group">
-                    <FormControlLabel value="1" control={<Radio />} label="Semester 1" checked={semester === "1" ? true : false} onChange={handleSemesterChange} />
-                    <FormControlLabel value="2" control={<Radio />} label="Semester 2" checked={semester === "2" ? true : false} onChange={handleSemesterChange} />
-                </RadioGroup>
-            </FormControl>
-            <Select 
-                name="selectCourse"
-                value=""
-                options={inputCheck ? courses.filter(course => course.term == semester) : []}
-                onInputChange={handleInputChange}
-                getOptionLabel={(course) => course.code + " (" + course.title + ")"}
-                getOptionValue={(course) => course.code + course.section}
-                placeholder="Type to search by course code or name..."
-                onChange={handleAdd}
-            />
+            <Typography variant="h2">HKU Timetable Combination Finder (21-22)</Typography>
+            <SemesterController semester={semester} handleSemesterChange={handleSemesterChange}/>
+            <CourseSearchBar inputCheck={inputCheck} semester={semester} courses={courses} handleInputChange={handleInputChange} handleAdd={handleAdd} />
             {selectedCourses.length > 0 ? 
-            <List>
-                {selectedCourses.map((course,idx) => 
-                    <ListItem id={course.code} key={idx}
-                        secondaryAction={
-                            <IconButton edge="end" aria-label="delete" onClick={handleDelete(`${course.code}`)}>
-                                <DeleteIcon/>
-                            </IconButton>
-                        }
-                    >
-                        <ListItemText 
-                            primary={course.code}
-                            secondary={course.title}
-                        />
-                    </ListItem>
-                )}
-            </List> : null}
+                <SelectedCoursesList selectedCourses={selectedCourses} handleDelete={handleDelete} /> : 
+            null}
             {selectedCourses.length > 0 ? 
-            <Grid container style={{width:'80%',margin:'auto'}} justifyContent="center" alignItems="stretch" spacing={2}>
-                <Grid item xs={8}>
-                <TextField
-                    label="Number of courses to take:"
-                    type="number"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    value={numCourse}
-                    min="1"
-                    max={selectedCourses.length > 5 ? 5 : selectedCourses.length}
-                    onChange={(e)=>setNumCourse(e.target.value)}
-                    fullWidth 
-                />
-                </Grid>
-                <Grid alignItems="stretch" style={{ display: "flex" }} item xs={4}>
-                    <Button variant="contained" onClick={handleMake} startIcon={<FormatListBulletedIcon />}>See Combinations</Button>
-                </Grid>
-            </Grid>
+                <SeeCombinationsButton selectedCourses={selectedCourses} numCourse={numCourse} setNumCourse={setNumCourse} handleMakeComb={handleMakeComb}/>
             : null}
             {showComb ? 
-            <div>
-                <h3>Total {result.length} {result.length > 1 ? 'combinations' : 'combination'} available!</h3>
-                {result.map((comb,idx) =>
-                    <div className={`comb ${idx}`} key={idx}>
-                        <ul>
-                            {comb.map((course,id) => <li key={id}>{course.code + " " + course.title + " " + course.section + " " + course.day + " " + course.stime + " " + course.etime}</li>)}
-                        </ul>
-                        <button onClick={(e)=>displayTable(idx, e)}>See Timetable</button>   
-                    </div>
-                )}
-            </div>
+                <CombinationList result={result} displayTable={displayTable}/>
             : null}
             {showTable ?
             <div>

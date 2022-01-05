@@ -1,5 +1,5 @@
 $timetable-elem-height: 60px;
-$border: 1px solid #000;
+$border: 2px solid #555;
 $color1: #ae7b7b;
 $color2: #8ba782;
 $color3: #6d6f76;
@@ -13,6 +13,25 @@ html, body {
 
 .comb:hover {
     background-color: #666666;
+}
+
+.comb-list {
+    border: $border;
+    border-radius: 4px;
+    padding: 6px;
+    margin-bottom: 6px;
+    ul, li {
+        padding: 0;
+    }
+    li {
+        border-bottom: 1px solid #555;
+    }
+    li:last-of-type {
+        border-bottom: none;
+    }
+    h4 {
+        margin: 0;
+    }
 }
 
 ul {
