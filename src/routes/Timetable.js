@@ -9,6 +9,7 @@ import BaseTable from "../components/BaseTable";
 import CombinationList from "../components/CombinationList";
 import CourseSelectArea from "../components/CourseSelectArea";
 import Footer from "../components/Footer";
+import AdComponent from "../components/AdComponent";
 
 // check if two courses have overlapping time
 function compareTime(c1, c2) { 
@@ -185,6 +186,7 @@ function Timetable() {
                 setNumCourse={setNumCourse}
                 handleMakeComb={handleMakeComb} 
             />
+            <AdComponent />
             {showComb ? 
                 <CombinationList result={result} displayTable={displayTable}/>
             : null}
