@@ -9,8 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Timetable />} />
-        <Route path="/timetable" element={<Timetable />} />
+        <Route path={`${process.env.PUBLIC_URL}/`} element={<Timetable />} />
       </Routes>
     </Router>
   );
