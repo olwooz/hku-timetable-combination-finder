@@ -18,7 +18,9 @@ function CombinationList({result, displayTable}) {
 
     return(
         <div>
-        <Typography variant='h5'>Total {result.length} {result.length > 1 ? 'combinations' : 'combination'} available!</Typography>
+        {result.length > 0 ?
+            <Typography variant='h5'>Total {result.length} {result.length > 1 ? 'combinations' : 'combination'} available!</Typography>
+        : <Typography variant='h5'>No combination available :(</Typography>}
         {result.map((comb, idx) =>
             <div className='comb-list'>
             <List className={`comb-${idx}`} key={idx}>

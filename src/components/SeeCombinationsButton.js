@@ -7,8 +7,8 @@ import TextField from '@mui/material/TextField';
 
 function SeeCombinationsButton({selectedCourses, numCourse, setNumCourse, handleMakeComb}){
     return(
-        <Grid container style={{width:'80%',margin:'auto'}} justifyContent="center" alignItems="stretch" spacing={2}>
-            <Grid item xs={8}>
+        <Grid container justifyContent="space-between" spacing={2}>
+            <Grid item xs={6}>
             <TextField
                 label="Number of courses to take:"
                 type="number"
@@ -27,8 +27,8 @@ function SeeCombinationsButton({selectedCourses, numCourse, setNumCourse, handle
                 fullWidth 
             />
             </Grid>
-            <Grid alignItems="stretch" style={{ display: "flex" }} item xs={4}>
-                <Button variant="contained" onClick={handleMakeComb} startIcon={<FormatListBulletedIcon />}>See Combinations</Button>
+            <Grid style={{ display: "flex" }} item xs={6}>
+                <Button fullWidth variant="contained" onClick={handleMakeComb} startIcon={<FormatListBulletedIcon />}>See Combinations</Button>
             </Grid>
         </Grid>
     );

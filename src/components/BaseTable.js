@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
 
-import Course from "./Course";
+import Fab from '@mui/material/Fab';
+import { Typography } from "@mui/material";
+
+import ViewListIcon from '@mui/icons-material/ViewList';
+
+
 import "../styles/styles.scss";
-var tableElemHeight = 60;
+var tableElemHeight = 40;
+
+const fabStyle = {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+};
 
 function calcTop(time) {
     var sh = 8;
@@ -33,9 +44,12 @@ function calcHeight(stime, etime) {
     return res;
 }
 
-function BaseTable({courses}) {
+function BaseTable({courses, hideTable, idx}) {
     return (    
+        <div>
+        <Typography variant='h5'>Combination {idx}:</Typography>
         <div className="timetable">
+
             <div className="timeline">
                 <ul> 
                     <li></li>
@@ -245,6 +259,8 @@ function BaseTable({courses}) {
                     </li>
                 </ul>
             </div>
+            <Fab style={fabStyle} onClick={hideTable}><ViewListIcon /></Fab>
+        </div>
         </div>
     );
 }

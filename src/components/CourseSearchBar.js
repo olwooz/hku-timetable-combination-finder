@@ -11,6 +11,8 @@ function CourseSearchBar({inputCheck, semester, courses, handleInputChange, hand
             getOptionValue={(course) => course.code + course.section}
             placeholder="Type to search by course code or name..."
             onChange={handleAdd}
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
         />
     );
 }

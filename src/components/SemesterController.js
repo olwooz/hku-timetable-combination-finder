@@ -9,6 +9,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 function SemesterController({semester, handleSemesterChange}) {
     return (
+        <div className="semester-controller" >
         <FormControl component="fieldset">
             <FormLabel component="legend">Choose Semester</FormLabel>
             <RadioGroup row aria-label="semester" name="row-radio-buttons-group">
@@ -16,6 +17,7 @@ function SemesterController({semester, handleSemesterChange}) {
                 <FormControlLabel value="2" control={<Radio />} label="Semester 2" checked={semester === "2" ? true : false} onChange={() => handleSemesterChange("2")} />
             </RadioGroup>
         </FormControl>
+        </div>
     );
 }
 

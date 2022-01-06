@@ -1,18 +1,20 @@
-$timetable-elem-height: 60px;
+$timetable-elem-height: 40px;
 $border: 2px solid #555;
-$color1: #ae7b7b;
-$color2: #8ba782;
-$color3: #6d6f76;
-$color4: #6a7dc1;
+$thin-border: 1px solid #ddd;
+$color1: #6a7dc1;
+$color2: #6d6f76;
+$color3: #ae7b7b;
+$color4: #8ba782;
 $color5: #695353;
 $font-color: #fff;
+$small: 600px;
+$medium: 1000px;
 
 html, body {
     box-sizing: border-box;
 }
-
-.comb:hover {
-    background-color: #666666;
+.content-wrapper {
+    min-height: calc(100vh - 30px);
 }
 
 .comb-list {
@@ -40,7 +42,32 @@ ul {
     padding: 0;
 }
 
+.header-wrapper {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.course-sel-wrapper {
+    border: $border;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 40px;
+    .selected-course-list {
+        ul, li {
+            padding: 0;
+        }
+    }
+}
+
+.semester-controller {
+    text-align: center;
+    margin: auto;
+}
+
 .timetable {
+    border: $border;
+    border-radius: 4px;
+    position: relative;
     text-align: center;
     display: grid;
     grid-template-columns: 1fr 7fr;
@@ -57,6 +84,9 @@ ul {
             border-right: $border;
             border-collapse: collapse;
         }
+        li:nth-child(odd) span {
+            visibility: hidden;
+        }
     }
     .courses {
         .courses-wrapper {
@@ -65,6 +95,8 @@ ul {
             height: 100%;
             .courses-group {
                 height: 100%;
+                border-right: $thin-border;
+                border-collapse: collapse;
                 .top-info {
                     border-bottom: $border;
                 }
@@ -75,9 +107,15 @@ ul {
                         width: 100%;
                         position: absolute;
                         color: $font-color;
+                        display: flex;
                         .coursetext {
+                            flex-grow: 1;
                             height: 100%;
                             display: inline-block;
+                            font-weight: bold;
+                            @media screen and (max-width: $medium){
+                                font-size: 0.8rem;
+                            }
                         }
                     }
                 }
@@ -98,5 +136,13 @@ ul {
                 }
             }
         }
+    }
+}
+
+.footer {
+    text-align: right;
+    .footer-icon:hover {
+        cursor: pointer;
+        color: #000;
     }
 }

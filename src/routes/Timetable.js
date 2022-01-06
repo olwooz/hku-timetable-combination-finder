@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
-
-import { Typography } from "@mui/material";
+import { useState } from "react";
+import Grid from '@mui/material/Grid';
 
 import "../styles/styles.scss";
 
 import courses from "../data/simplified";
+import Header from "../components/Header";
 import BaseTable from "../components/BaseTable";
-import { ClassSharp } from "@material-ui/icons";
-import SemesterController from "../components/SemesterController";
-import CourseSearchBar from "../components/CourseSearchBar";
-import SelectedCoursesList from "../components/SelectedCoursesList";
-import SeeCombinationsButton from "../components/SeeCombinationsButton";
 import CombinationList from "../components/CombinationList";
+import CourseSelectArea from "../components/CourseSelectArea";
+import Footer from "../components/Footer";
 
 // check if two courses have overlapping time
 function compareTime(c1, c2) { 
@@ -93,6 +90,7 @@ function Timetable() {
 
     const [showComb, setShowComb] = useState(false);
     const [showTable, setShowTable] = useState(false);
+    const [displayIdx, setDisplayIdx] = useState("0");
 
     const reset = () => {
         setSelectedCourses([]);
@@ -160,36 +158,47 @@ function Timetable() {
         setSelectedComb(result[idx]);
         setShowTable(true);
         setShowComb(false);
+        setDisplayIdx(idx+1);
     }
 
     const hideTable = () => {
         setSelectedComb([]);
         setShowTable(false);
         setShowComb(true);
+        setDisplayIdx("0")
     }
 
     return(
         <div>
-            <Typography variant="h2">HKU Timetable Combination Finder (21-22)</Typography>
-            <SemesterController semester={semester} handleSemesterChange={handleSemesterChange}/>
-            <CourseSearchBar inputCheck={inputCheck} semester={semester} courses={courses} handleInputChange={handleInputChange} handleAdd={handleAdd} />
-            {selectedCourses.length > 0 ? 
-                <SelectedCoursesList selectedCourses={selectedCourses} handleDelete={handleDelete} /> : 
-            null}
-            {selectedCourses.length > 0 ? 
-                <SeeCombinationsButton selectedCourses={selectedCourses} numCourse={numCourse} setNumCourse={setNumCourse} handleMakeComb={handleMakeComb}/>
-            : null}
+            <div className="content-wrapper">
+            <Header />
+            <CourseSelectArea 
+                semester={semester} 
+                inputCheck={inputCheck}
+                courses={courses}
+                numCourse={numCourse}
+                selectedCourses={selectedCourses}
+                handleSemesterChange={handleSemesterChange} 
+                handleInputChange={handleInputChange}
+                handleAdd={handleAdd}
+                handleDelete={handleDelete}
+                setNumCourse={setNumCourse}
+                handleMakeComb={handleMakeComb} 
+            />
             {showComb ? 
                 <CombinationList result={result} displayTable={displayTable}/>
             : null}
             {showTable ?
             <div>
-                <button onClick={hideTable}>Choose another combination</button>
                 <BaseTable 
                     courses={selectedComb}
+                    hideTable={hideTable}
+                    idx={displayIdx}
                 />
             </div>   
             : null}
+            </div>
+            <Footer />
         </div>
     );
 }
