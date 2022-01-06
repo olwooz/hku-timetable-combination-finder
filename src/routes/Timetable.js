@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "../styles/styles.scss";
 
@@ -95,6 +95,7 @@ function Timetable() {
         setSelectedCourses([]);
         setSelectedSubclasses([]);
         setShowComb(false);
+        setNumCourse("1")
     }
 
     const handleSemesterChange = (semester) => {
@@ -166,6 +167,10 @@ function Timetable() {
         setShowComb(true);
         setDisplayIdx("0")
     }
+
+    useEffect(() => {
+        setNumCourse(selectedCourses.length);
+    }, [selectedCourses])
 
     return(
         <div>
