@@ -14,7 +14,8 @@ function compareTime(c1, c2) {
     for (var i = 0; i < c1["day"].length; i++) {
         for (var j = 0; j < c2["day"].length; j++) {
             if (c1["day"][i] == c2["day"][j]) {
-                if (c1["stime"][i] < c2["etime"][j] && c1["stime"][i] >= c2["stime"][j]) {
+                if (c1["stime"][i] < c2["etime"][j] && c1["stime"][i] >= c2["stime"][j] ||
+                    c2["stime"][j] < c1["etime"][i] && c2["stime"][j] >= c1["stime"][i]) {
                     return false;
                 }
             }
