@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import "../styles/styles.scss";
 
@@ -111,7 +111,9 @@ function Timetable() {
         setSelectedCourses([]);
         setSelectedSubclasses([]);
         setShowComb(false);
-        setNumCourse("1")
+        setShowTable(false);
+        setDisplayIdx("0");
+        setNumCourse("1");
     }
 
     const handleSemesterChange = (semester) => {
@@ -182,12 +184,12 @@ function Timetable() {
         }
     }
 
-    const displayTable = (idx) => {
+    const displayTable = useCallback((idx) => {
         setSelectedComb(result[idx]);
         setShowTable(true);
         setShowComb(false);
         setDisplayIdx(idx+1);
-    }
+    }, []);
 
     const hideTable = () => {
         setSelectedComb([]);

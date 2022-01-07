@@ -1,3 +1,5 @@
+import React from "react"
+
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -8,22 +10,15 @@ import TableChartIcon from '@mui/icons-material/TableChart';
 
 import { Typography } from "@mui/material";
 
-const fabStyle = {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-};
-
 function CombinationList({result, displayTable}) {
-
     return(
         <div>
         {result.length > 0 ?
             <Typography variant='h5'>Total {result.length} {result.length > 1 ? 'combinations' : 'combination'} available!</Typography>
         : <Typography variant='h5'>No combination available :(</Typography>}
         {result.map((comb, idx) =>
-            <div className='comb-list'>
-            <List className={`comb-${idx}`} key={idx}>
+            <div className='comb-list' key={idx}>
+            <List className={`comb-${idx}`}>
                 <Typography variant='h6'>Combination {idx+1}</Typography>
                 {comb.map((course, id) => {
                     var secondaryText = course.day[0] + " " + course.stime[0] + "-" +course.etime[0];
@@ -40,12 +35,12 @@ function CombinationList({result, displayTable}) {
                     );
                 }
                 )}
-                <Fab style={fabStyle} onClick={(e)=>displayTable(idx, e)}><TableChartIcon /></Fab>
             </List>
+            <Fab className="showTimetable-button" onClick={(e)=>displayTable(idx, e)}><TableChartIcon /></Fab>
             </div>
         )}
         </div>
     );
 }
 
-export default CombinationList;
+export default React.memo(CombinationList);
