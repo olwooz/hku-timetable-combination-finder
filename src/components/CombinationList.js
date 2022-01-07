@@ -21,9 +21,9 @@ function CombinationList({result, displayTable}) {
             <List className={`comb-${idx}`}>
                 <Typography variant='h6'>Combination {idx+1}</Typography>
                 {comb.map((course, id) => {
-                    var secondaryText = course.day[0] + " " + course.stime[0] + "-" +course.etime[0];
+                    var secondaryText = course.day[0] + " " + course.stime[0] + "-" +course.etime[0] + " " + course.venue[0];
                     for (var i = 1; i < course.day.length; i++) {
-                        secondaryText = secondaryText + " / " + course.day[i] + " " + course.stime[i] + "-" + course.etime[i];
+                        secondaryText = secondaryText + " / " + course.day[i] + " " + course.stime[i] + "-" + course.etime[i] + " " + course.venue[i];
                     }
                     return (
                     <ListItem id={course.code} key={id}>
