@@ -18,7 +18,7 @@ function SeeCombinationsButton({selectedCourses, numCourse, setNumCourse, handle
                 InputProps={{
                     inputProps: {
                         min: "1",
-                        max: selectedCourses.length > 5 ? 5 : selectedCourses.length
+                        max: selectedCourses.length > 6 ? 6 : selectedCourses.length
                     }
                 }}
                 variant="outlined"
