@@ -23,6 +23,18 @@ function checkDayOff(courses, dayOff) {
     return true;
 }
 
+// check start time
+function checkStartTime(courses, stime) {
+    for (var i = 0; i < courses.length; i++) {
+        for (var j = 0; j < courses[i]["stime"].length; j++) {
+            if (stime > courses[i]["stime"][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 // check if there are no same courses and no time clash in the combination
 function isValidCombination(courses) {
     for (var i = 0; i < courses.length - 1; i++) {
@@ -99,6 +111,7 @@ function Timetable() {
     const [selectedSubclasses, setSelectedSubclasses] = useState([]);
     const [numCourse, setNumCourse] = useState("1");
     const [dayOff, setDayOff] = useState([]);
+    const [stime, setStime] = useState("");
     
     const [result, setResult] = useState([]);
     const [selectedComb, setSelectedComb] = useState([]);
@@ -171,6 +184,9 @@ function Timetable() {
         if (dayOff.length > 0) {
             comb = comb.filter(c => checkDayOff(c, dayOff));
         }
+        if (stime !== "") {
+            comb = comb.filter(c => checkStartTime(c, stime));
+        }
         setResult(comb);
         setShowComb(true);
     }
@@ -189,7 +205,7 @@ function Timetable() {
         setShowTable(true);
         setShowComb(false);
         setDisplayIdx(idx+1);
-    }, []);
+    }, [result]);
 
     const hideTable = () => {
         setSelectedComb([]);
@@ -219,6 +235,8 @@ function Timetable() {
                 setNumCourse={setNumCourse}
                 handleMakeComb={handleMakeComb} 
                 handleDayOffCheck={handleDayOffCheck}
+                stime={stime}
+                setStime={setStime}
             />
             {showComb ? 
                 <CombinationList result={result} displayTable={displayTable}/>

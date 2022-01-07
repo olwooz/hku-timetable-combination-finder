@@ -11,7 +11,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-function SeeCombinations({selectedCourses, numCourse, setNumCourse, handleMakeComb, handleDayOffCheck}){
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+
+function SeeCombinations({selectedCourses, numCourse, setNumCourse, handleMakeComb, handleDayOffCheck, stime, setStime}){
     return(
         <Grid container justifyContent="space-between" spacing={2}>
             <Grid className="dayoff-wrapper" item xs={12}>
@@ -75,6 +79,25 @@ function SeeCombinations({selectedCourses, numCourse, setNumCourse, handleMakeCo
                             onChange={handleDayOffCheck}
                         />
                     </FormGroup>
+                </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+                <FormControl fullWidth>
+                    <InputLabel id="stime-select-label">Lecture start time:</InputLabel>
+                    <Select
+                        labelId="stime-select-label"
+                        id="stime-select"
+                        label="Lecture start time:"
+                        value={stime}
+                        onChange={(e)=>setStime(e.target.value)}
+                    >
+                        <MenuItem value="">Select lecture start time</MenuItem>
+                        <MenuItem value="09:30">09:30</MenuItem>
+                        <MenuItem value="10:30">10:30</MenuItem>
+                        <MenuItem value="11:30">11:30</MenuItem>
+                        <MenuItem value="12:30">12:30</MenuItem>
+                        <MenuItem value="13:30">13:30</MenuItem>
+                    </Select>
                 </FormControl>
             </Grid>
             <Grid item xs={6}>
