@@ -3,10 +3,10 @@ import Grid from '@mui/material/Grid';
 import SemesterController from "../components/SemesterController";
 import CourseSearchBar from "../components/CourseSearchBar";
 import SelectedCoursesList from "../components/SelectedCoursesList";
-import SeeCombinationsButton from "../components/SeeCombinationsButton";
+import SeeCombinations from "./SeeCombinations";
 
 
-function CourseSelectArea({semester, handleSemesterChange, selectedCourses, handleDelete, inputCheck, courses, handleInputChange, handleAdd, numCourse, setNumCourse, handleMakeComb}){
+function CourseSelectArea({semester, handleSemesterChange, selectedCourses, handleDelete, inputCheck, courses, handleInputChange, handleAdd, numCourse, setNumCourse, handleMakeComb, handleDayOffCheck}){
     return(
         <div>
         <SemesterController semester={semester} handleSemesterChange={handleSemesterChange}/>
@@ -21,7 +21,7 @@ function CourseSelectArea({semester, handleSemesterChange, selectedCourses, hand
                         <CourseSearchBar inputCheck={inputCheck} semester={semester} courses={courses} handleInputChange={handleInputChange} handleAdd={handleAdd} />
                     </Grid>
                     <Grid item xs={12}>
-                        <SeeCombinationsButton selectedCourses={selectedCourses} numCourse={numCourse} setNumCourse={setNumCourse} handleMakeComb={handleMakeComb}/>
+                        <SeeCombinations selectedCourses={selectedCourses} numCourse={numCourse} setNumCourse={setNumCourse} handleMakeComb={handleMakeComb} handleDayOffCheck={handleDayOffCheck}/>
                     </Grid>
                 </Grid>
             </Grid>

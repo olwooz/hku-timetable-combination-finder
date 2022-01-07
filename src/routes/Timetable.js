@@ -9,13 +9,12 @@ import CombinationList from "../components/CombinationList";
 import CourseSelectArea from "../components/CourseSelectArea";
 import Footer from "../components/Footer";
 
-// check if two courses have overlapping time
-function compareTime(c1, c2) { 
-    for (var i = 0; i < c1["day"].length; i++) {
-        for (var j = 0; j < c2["day"].length; j++) {
-            if (c1["day"][i] == c2["day"][j]) {
-                if (c1["stime"][i] < c2["etime"][j] && c1["stime"][i] >= c2["stime"][j] ||
-                    c2["stime"][j] < c1["etime"][i] && c2["stime"][j] >= c1["stime"][i]) {
+// check if courses have day off
+function checkDayOff(courses, dayOff) {
+    for (var i = 0; i < courses.length; i++) {
+        for (var j = 0; j < courses[i]["day"].length; j++) {
+            for (var k = 0; k < dayOff.length; k++){
+                if (dayOff[k] === courses[i]["day"][j]) {
                     return false;
                 }
             }
@@ -33,6 +32,21 @@ function isValidCombination(courses) {
             }
             if (!compareTime(courses[i], courses[j])) { 
                 return false;
+            }
+        }
+    }
+    return true;
+}
+
+// check if two courses have overlapping time
+function compareTime(c1, c2) { 
+    for (var i = 0; i < c1["day"].length; i++) {
+        for (var j = 0; j < c2["day"].length; j++) {
+            if (c1["day"][i] == c2["day"][j]) {
+                if (c1["stime"][i] < c2["etime"][j] && c1["stime"][i] >= c2["stime"][j] ||
+                    c2["stime"][j] < c1["etime"][i] && c2["stime"][j] >= c1["stime"][i]) {
+                    return false;
+                }
             }
         }
     }
@@ -84,6 +98,7 @@ function Timetable() {
     const [selectedCourses, setSelectedCourses] = useState([]);
     const [selectedSubclasses, setSelectedSubclasses] = useState([]);
     const [numCourse, setNumCourse] = useState("1");
+    const [dayOff, setDayOff] = useState([]);
     
     const [result, setResult] = useState([]);
     const [selectedComb, setSelectedComb] = useState([]);
@@ -150,9 +165,21 @@ function Timetable() {
         setShowTable(false);
         setSelectedComb([])
         var comb = k_combinations(selectedSubclasses, numCourse);
-        comb = comb.filter(c => isValidCombination(c));
+        comb = comb.filter(c => isValidCombination(c, dayOff));
+        if (dayOff.length > 0) {
+            comb = comb.filter(c => checkDayOff(c, dayOff));
+        }
         setResult(comb);
         setShowComb(true);
+    }
+
+    const handleDayOffCheck = (e) => {
+        if (e.target.checked) {
+            setDayOff(d => [...d, e.target.value]);
+        }
+        else {
+            setDayOff(d => d.filter(dayOff => dayOff != e.target.value));
+        }
     }
 
     const displayTable = (idx) => {
@@ -189,6 +216,7 @@ function Timetable() {
                 handleDelete={handleDelete}
                 setNumCourse={setNumCourse}
                 handleMakeComb={handleMakeComb} 
+                handleDayOffCheck={handleDayOffCheck}
             />
             {showComb ? 
                 <CombinationList result={result} displayTable={displayTable}/>
