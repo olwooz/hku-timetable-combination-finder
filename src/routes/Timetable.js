@@ -169,7 +169,7 @@ function Timetable() {
     }
 
     useEffect(() => {
-        setNumCourse(selectedCourses.length);
+        selectedCourses.length > 6 ? setNumCourse(6) : setNumCourse(selectedCourses.length);
     }, [selectedCourses])
 
     return(
