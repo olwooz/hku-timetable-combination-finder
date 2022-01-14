@@ -6,6 +6,7 @@ $color2: #6d6f76;
 $color3: #ae7b7b;
 $color4: #8ba782;
 $color5: #695353;
+$color6: #7baeae;
 $font-color: #fff;
 $small: 600px;
 $medium: 1000px;
@@ -163,6 +164,9 @@ ul {
                 }
                 .course-5 {
                     background-color: $color5;
+                }
+                .course-6 {
+                    background-color: $color6;
                 }
             }
         }
