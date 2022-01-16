@@ -1,5 +1,8 @@
+# use convertcsv.com to convert from csv to json first
+
 import json
 import os
+
 
 def divide_subclasses(courses):
     divided = {
@@ -10,16 +13,18 @@ def divide_subclasses(courses):
             "section": courses[0]["CLASS SECTION"],
             "stime": [courses[0]["START TIME"]] if not courses[0]["START TIME"].isspace() else ["N/A"],
             "etime": [courses[0]["END TIME"]],
-            "venue": [courses[0]["VENUE"]] if (not courses[0]["VENUE"].isspace()) and (len(courses[0]["VENUE"])>0) else ["N/A"],
+            "venue": [courses[0]["VENUE"]] if (not courses[0]["VENUE"].isspace()) and (len(courses[0]["VENUE"]) > 0) else ["N/A"],
         }]
     }
-    day = list(filter(None, [courses[0]["SUN"],courses[0]["MON"],courses[0]["TUE"],courses[0]["WED"],courses[0]["THU"],courses[0]["FRI"],courses[0]["SAT"]]))
+    day = list(filter(None, [courses[0]["SUN"], courses[0]["MON"], courses[0]["TUE"],
+                             courses[0]["WED"], courses[0]["THU"], courses[0]["FRI"], courses[0]["SAT"]]))
     if len(day) > 0:
         divided["subclass"][0]["day"] = [day[0]]
     else:
         divided["subclass"][0]["day"] = ["N/A"]
     for course in courses[1:]:
-        day = list(filter(None, [course["SUN"],course["MON"],course["TUE"],course["WED"],course["THU"],course["FRI"],course["SAT"]]))
+        day = list(filter(None, [course["SUN"], course["MON"], course["TUE"],
+                                 course["WED"], course["THU"], course["FRI"], course["SAT"]]))
         exists = False
         for sub in divided["subclass"]:
             if course["CLASS SECTION"] == sub["section"]:
@@ -44,11 +49,12 @@ def divide_subclasses(courses):
             divided["subclass"].append(newsub)
     return divided
 
+
 here = os.path.dirname(os.path.abspath(__file__))
-filename = os.path.join(here, 'hku_21-22_class_timetable.json')
+filename = os.path.join(here, '21-22_class_timetable_20220112.json')
 result_filename = os.path.join(here, 'simplified.json')
 
-with open(filename) as json_data:
+with open(filename, 'rt', encoding='UTF8') as json_data:
     courses = json.load(json_data)
 
 prevCourse = courses[0]
