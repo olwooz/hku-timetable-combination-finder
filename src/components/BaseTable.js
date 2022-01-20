@@ -94,6 +94,7 @@ function BaseTable({courses, hideTable, idx}) {
                             {courses.map((course, idx)=>{
                                 if (course.day.includes("SUN")) {
                                     var i = 0;
+                                    while (course.day[i] != "SUN") i++;
                                     var top = calcTop(course.stime[i]) * tableElemHeight;
                                     var height = calcHeight(course.stime[i], course.etime[i]) * tableElemHeight;
                                     var lineHeight = height+"px";
@@ -118,6 +119,7 @@ function BaseTable({courses, hideTable, idx}) {
                             {courses.map((course, idx)=>{
                                 if (course.day.includes("MON")) {
                                     var i = 0;
+                                    while (course.day[i] != "MON") i++;
                                     var top = calcTop(course.stime[i]) * tableElemHeight;
                                     var height = calcHeight(course.stime[i], course.etime[i]) * tableElemHeight;
                                     var lineHeight = height+"px";
@@ -142,6 +144,7 @@ function BaseTable({courses, hideTable, idx}) {
                             {courses.map((course, idx)=>{
                                 if (course.day.includes("TUE")) {
                                     var i = 0;
+                                    while (course.day[i] != "TUE") i++;
                                     var top = calcTop(course.stime[i]) * tableElemHeight;
                                     var height = calcHeight(course.stime[i], course.etime[i]) * tableElemHeight;
                                     var lineHeight = height+"px";
@@ -166,6 +169,7 @@ function BaseTable({courses, hideTable, idx}) {
                             {courses.map((course, idx)=>{
                                 if (course.day.includes("WED")) {
                                     var i = 0;
+                                    while (course.day[i] != "WED") i++;
                                     var top = calcTop(course.stime[i]) * tableElemHeight;
                                     var height = calcHeight(course.stime[i], course.etime[i]) * tableElemHeight;
                                     var lineHeight = height+"px";
@@ -190,6 +194,7 @@ function BaseTable({courses, hideTable, idx}) {
                             {courses.map((course, idx)=>{
                                 if (course.day.includes("THU")) {
                                     var i = 0;
+                                    while (course.day[i] != "THU") i++;
                                     var top = calcTop(course.stime[i]) * tableElemHeight;
                                     var height = calcHeight(course.stime[i], course.etime[i]) * tableElemHeight;
                                     var lineHeight = height+"px";
