@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/hku-timetable-combination-finder/static/css/main.abfa433d.css",
-    "main.js": "/hku-timetable-combination-finder/static/js/main.e2aa840e.js",
+    "main.js": "/hku-timetable-combination-finder/static/js/main.115f4508.js",
     "static/media/roboto-all-500-normal.woff": "/hku-timetable-combination-finder/static/media/roboto-all-500-normal.52cb737b682eb9661ee1.woff",
     "static/media/roboto-all-700-normal.woff": "/hku-timetable-combination-finder/static/media/roboto-all-700-normal.ef6d1d09b20b877fee4e.woff",
     "static/media/roboto-all-400-normal.woff": "/hku-timetable-combination-finder/static/media/roboto-all-400-normal.376ea5d93f71583052f6.woff",
@@ -36,10 +36,10 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/hku-timetable-combination-finder/static/media/roboto-greek-ext-700-normal.9674bc0ae12c2551d9d1.woff2",
     "index.html": "/hku-timetable-combination-finder/index.html",
     "main.abfa433d.css.map": "/hku-timetable-combination-finder/static/css/main.abfa433d.css.map",
-    "main.e2aa840e.js.map": "/hku-timetable-combination-finder/static/js/main.e2aa840e.js.map"
+    "main.115f4508.js.map": "/hku-timetable-combination-finder/static/js/main.115f4508.js.map"
   },
   "entrypoints": [
     "static/css/main.abfa433d.css",
-    "static/js/main.e2aa840e.js"
+    "static/js/main.115f4508.js"
   ]
 }
