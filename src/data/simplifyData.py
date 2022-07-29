@@ -51,7 +51,7 @@ def divide_subclasses(courses):
 
 
 here = os.path.dirname(os.path.abspath(__file__))
-filename = os.path.join(here, '21-22_class_timetable_20220112.json')
+filename = os.path.join(here, '2022-23_class_timetable_20220721.json')
 result_filename = os.path.join(here, 'simplified.json')
 
 with open(filename, 'rt', encoding='UTF8') as json_data:
