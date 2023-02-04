@@ -11,172 +11,178 @@ $font-color: #fff;
 $small: 600px;
 $medium: 1000px;
 
-html, body {
-    box-sizing: border-box;
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
 }
 .content-wrapper {
-    min-height: calc(100vh - 30px);
+  @media only screen and (max-width: 600px) {
+    width: 90vw;
+  }
+  width: 60vw;
+  min-height: calc(100vh - 30px);
+  margin: auto;
 }
 
 .comb-list {
-    border: $border;
-    border-radius: 4px;
-    padding: 6px;
-    margin-bottom: 6px;
-    position: relative;
-    ul, li {
-        padding: 0;
-    }
-    li {
-        border-bottom: 1px solid #555;
-    }
-    li:last-of-type {
-        border-bottom: none;
-    }
-    h4 {
-        margin: 0;
-    }
-    .showTimetable-button {
-        position: absolute;
-        bottom: 16px;
-        right: 16px;
-    }
+  border: $border;
+  border-radius: 4px;
+  padding: 6px;
+  margin-bottom: 6px;
+  position: relative;
+  ul,
+  li {
+    padding: 0;
+  }
+  li {
+    border-bottom: 1px solid #555;
+  }
+  li:last-of-type {
+    border-bottom: none;
+  }
+  h4 {
+    margin: 0;
+  }
+  .showTimetable-button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+  }
 }
 
-
 ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .header-wrapper {
-    text-align: center;
-    margin: 40px 0;
+  text-align: center;
+  padding: 40px 0;
 }
 
 .course-sel-wrapper {
-    border: $border;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 40px;
-    .selected-course-list {
-        ul, li {
-            padding: 0;
-        }
+  border: $border;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 40px;
+  .selected-course-list {
+    ul,
+    li {
+      padding: 0;
     }
+  }
 }
 
 .semester-controller {
-    text-align: center;
-    margin: auto;
+  text-align: center;
+  margin: auto;
 }
 
 .dayoff-wrapper {
-    text-align: center;
-    .dayoff-legend {
-        text-align: left;
+  text-align: center;
+  .dayoff-legend {
+    text-align: left;
+  }
+  .dayoff-checkbox {
+    @media screen and (max-width: 1130px) {
+      margin-left: 8px;
+      margin-right: 8px;
     }
-    .dayoff-checkbox {
-        @media screen and (max-width: 1130px){
-            margin-left: 8px;
-            margin-right: 8px;
-        }
-        @media screen and (max-width: 900px){
-            margin-left: 24px;
-            margin-right: 24px;
-        }
-        @media screen and (max-width: 690px){
-            margin-left: 8px;
-            margin-right: 8px;
-        }
+    @media screen and (max-width: 900px) {
+      margin-left: 24px;
+      margin-right: 24px;
     }
+    @media screen and (max-width: 690px) {
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+  }
 }
 
-
-
 .timetable {
-    border: $border;
-    border-radius: 4px;
-    position: relative;
-    text-align: center;
-    display: grid;
-    grid-template-columns: 1fr 7fr;
+  border: $border;
+  border-radius: 4px;
+  position: relative;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+  li {
+    height: $timetable-elem-height;
+    line-height: $timetable-elem-height;
+  }
+  .timeline {
+    li:first-child {
+      height: calc($timetable-elem-height/2);
+      line-height: calc($timetable-elem-height/2);
+    }
     li {
-        height: $timetable-elem-height;
-        line-height: $timetable-elem-height;
+      border-right: $border;
+      border-collapse: collapse;
     }
-    .timeline {
-        li:first-child {
-            height: calc($timetable-elem-height/2);
-            line-height: calc($timetable-elem-height/2);
-        }
-        li {
-            border-right: $border;
-            border-collapse: collapse;
-        }
-        li:nth-child(odd) span {
-            visibility: hidden;
-        }
+    li:nth-child(odd) span {
+      visibility: hidden;
     }
-    .courses {
-        .courses-wrapper {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            height: 100%;
-            .courses-group {
-                height: 100%;
-                border-right: $thin-border;
-                border-collapse: collapse;
-                .top-info {
-                    border-bottom: $border;
-                }
-                ul {
-                    height: 100%;
-                    position: relative;
-                    li[class^='course-'] {
-                        width: 100%;
-                        position: absolute;
-                        color: $font-color;
-                        display: flex;
-                        .coursetext {
-                            flex-grow: 1;
-                            height: 100%;
-                            display: inline-block;
-                            font-weight: bold;
-                            @media screen and (max-width: $medium){
-                                font-size: 0.8rem;
-                            }
-                        }
-                    }
-                }
-                .course-1 {
-                    background-color: $color1;
-                }
-                .course-2 {
-                    background-color: $color2;
-                }
-                .course-3 {
-                    background-color: $color3;
-                }
-                .course-4 {
-                    background-color: $color4;
-                }
-                .course-5 {
-                    background-color: $color5;
-                }
-                .course-6 {
-                    background-color: $color6;
-                }
+  }
+  .courses {
+    .courses-wrapper {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      height: 100%;
+      .courses-group {
+        height: 100%;
+        border-right: $thin-border;
+        border-collapse: collapse;
+        .top-info {
+          border-bottom: $border;
+        }
+        ul {
+          height: 100%;
+          position: relative;
+          li[class^="course-"] {
+            width: 100%;
+            position: absolute;
+            color: $font-color;
+            display: flex;
+            .coursetext {
+              flex-grow: 1;
+              height: 100%;
+              display: inline-block;
+              font-weight: bold;
+              @media screen and (max-width: $medium) {
+                font-size: 0.8rem;
+              }
             }
+          }
         }
+        .course-1 {
+          background-color: $color1;
+        }
+        .course-2 {
+          background-color: $color2;
+        }
+        .course-3 {
+          background-color: $color3;
+        }
+        .course-4 {
+          background-color: $color4;
+        }
+        .course-5 {
+          background-color: $color5;
+        }
+        .course-6 {
+          background-color: $color6;
+        }
+      }
     }
+  }
 }
 
 .footer {
-    text-align: right;
-    .footer-icon:hover {
-        cursor: pointer;
-        color: #000;
-    }
+  text-align: right;
+  .footer-icon:hover {
+    cursor: pointer;
+    color: #000;
+  }
 }
