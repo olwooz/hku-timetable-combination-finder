@@ -1,4 +1,4 @@
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%olwooz%2Fhku-timetable-combination-finder&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://github.com/olwooz/hku-timetable-combination-finder)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Folwooz%2Fhku-timetable-combination-finder&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://github.com/olwooz/hku-timetable-combination-finder)
 
 # HKU TIMETABLE COMBINATION FINDER
 https://olwooz.github.io/hku-timetable-combination-finder/
